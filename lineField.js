@@ -7,12 +7,14 @@ export default class LineField {
   height = 1000;
   pointDistance = 20;
   zoom = 20;
-  speed = 0.5;
+  speed = 0.25;
   points = [];
   noiseGenerator = createNoise3D();
   z = 0; // used for time
 
-  constructor() {
+  constructor(width = 1000, height = 1000) {
+    this.width = width;
+    this.height = height;
     let canvas = document.createElement('canvas');
     canvas.width = this.width;
     canvas.height = this.height;
