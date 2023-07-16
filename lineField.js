@@ -7,7 +7,7 @@ export default class LineField {
   height = 1000;
   pointDistance = 40;
   zoom = 20;
-  speed = 0.25;
+  speed = 0.1;
   points = [];
   noiseGenerator = createNoise3D();
   noiseGenerator2 = createNoise3D();
@@ -67,19 +67,13 @@ export default class LineField {
     let canvas = this.canvas;
     let paper = canvas.getContext('2d');
     paper.clearRect(0, 0, this.width, this.height);
-    paper.strokeStyle = 'red';
+    paper.fillRect(0, 0, this.width, this.height);
 
     for (let x = numPointsX; x >= 0; x--) {
       for (let y = numPointsY; y >= 0; y--) {
         this?.points?.[x]?.[y]?.draw(paper);
       }
     }
-
-    // this.points.forEach((column, i) => {
-    // column.forEach((cell, j) => {
-    // cell.draw(paper);
-    // });
-    // });
   }
 
   reset() {
