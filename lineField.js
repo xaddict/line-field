@@ -43,19 +43,17 @@ export default class LineField {
           y / this.zoom,
           this.z * this.speed
         );
-        noise = (noise + 1) / 2;
 
         let noise2 = this.noiseGenerator2(
           x / this.zoom,
           y / this.zoom,
           this.z * this.speed
         );
-        noise2 = (noise2 + 1) / 2;
 
         points[x][y] = new ForceLine(
           x * this.pointDistance + this.pointDistance / 2,
           y * this.pointDistance + this.pointDistance / 2,
-          [noise * (this.pointDistance / 2), noise2 * (this.pointDistance / 2)]
+          [noise, noise2]
         );
       }
     }
@@ -71,9 +69,9 @@ export default class LineField {
     paper.clearRect(0, 0, this.width, this.height);
     paper.strokeStyle = 'red';
 
-    for (let x = numPointsX; x > 0; x--) {
-      for (let y = numPointsY; y > 0; y--) {
-        this.points[x][y].draw(paper);
+    for (let x = numPointsX; x >= 0; x--) {
+      for (let y = numPointsY; y >= 0; y--) {
+        this?.points?.[x]?.[y]?.draw(paper);
       }
     }
 

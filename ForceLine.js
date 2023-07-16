@@ -1,3 +1,9 @@
+function linear(x, fromStart, fromEnd, toStart, toEnd) {
+  return (
+    ((x - fromStart) / (fromEnd - fromStart)) * (toEnd - toStart) + toStart
+  );
+}
+
 export default class ForceLine {
   x = null;
   y = null;
@@ -10,25 +16,23 @@ export default class ForceLine {
   }
 
   draw(paper) {
-    const endX = this.x + this.force[0] * 10;
-    const endY = this.y + this.force[1] * 10;
+    const linearForce0 = linear(this.force[0], -1, 1, 0, 1);
+    const linearForce1 = linear(this.force[1], -1, 1, 0, 1);
+    const endX = this.x + this.force[0] * 100;
+    const endY = this.y + this.force[1] * 100;
+    const hue = linearForce0 * 360;
+    const saturation = linearForce1 * 100;
 
     paper.beginPath();
     const gradient = paper.createLinearGradient(this.x, this.y, endX, endY);
-    gradient.addColorStop(0, 'black');
-    gradient.addColorStop(1, 'blue');
+    gradient.addColorStop(0, `hsl(${hue}, 100%, 10%)`);
+    gradient.addColorStop(1, `hsl(${hue}, 100%, 50%)`);
     paper.strokeStyle = gradient;
-    // paper.strokeStyle = 'linear-gradient(white, black)';
     paper.lineWidth = 10;
     paper.lineCap = 'round';
     paper.moveTo(this.x, this.y);
     paper.lineTo(endX, endY);
     paper.stroke();
-
-    // paper.strokeStyle = 'red';
-    // paper.lineWidth = 5;
-    // paper.ellipse(this.x, this.y, this.force[0], this.force[1], 0, 0, 6.28);
-    // paper.stroke();
-    // paper.fill();
+    paper.closePath();
   }
 }
