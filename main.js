@@ -1,7 +1,7 @@
 import './style.scss';
 import LineField from './lineField.js';
 
-let lineField = new LineField(500, 500);
+let lineField = new LineField(1000, 1000);
 
 lineField.draw();
 

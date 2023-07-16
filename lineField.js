@@ -5,11 +5,12 @@ export default class LineField {
   canvas = null;
   width = 1000;
   height = 1000;
-  pointDistance = 20;
+  pointDistance = 40;
   zoom = 20;
   speed = 0.25;
   points = [];
   noiseGenerator = createNoise3D();
+  noiseGenerator2 = createNoise3D();
   z = 0; // used for time
 
   constructor(width = 1000, height = 1000) {
@@ -43,10 +44,18 @@ export default class LineField {
           this.z * this.speed
         );
         noise = (noise + 1) / 2;
+
+        let noise2 = this.noiseGenerator2(
+          x / this.zoom,
+          y / this.zoom,
+          this.z * this.speed
+        );
+        noise2 = (noise2 + 1) / 2;
+
         points[x][y] = new ForceLine(
           x * this.pointDistance + this.pointDistance / 2,
           y * this.pointDistance + this.pointDistance / 2,
-          [noise * (this.pointDistance / 2), noise * (this.pointDistance / 2)]
+          [noise * (this.pointDistance / 2), noise2 * (this.pointDistance / 2)]
         );
       }
     }
@@ -55,23 +64,25 @@ export default class LineField {
   }
 
   draw() {
+    const numPointsX = this.width / this.pointDistance;
+    const numPointsY = this.height / this.pointDistance;
     let canvas = this.canvas;
     let paper = canvas.getContext('2d');
     paper.clearRect(0, 0, this.width, this.height);
     paper.strokeStyle = 'red';
-    this.points.forEach((column, i) => {
-      column.forEach((cell, j) => {
-        cell.draw(paper);
-      });
-    });
-  }
 
-  // TODO:
-  // 1. [X] create noise calculator
-  // 2. [x] set global for X
-  // 3. [x] set global noise for Y
-  // 4. [x] move the noise through time (or axis)
-  // 5. [ ] Use noise for forces of the lines
+    for (let x = numPointsX; x > 0; x--) {
+      for (let y = numPointsY; y > 0; y--) {
+        this.points[x][y].draw(paper);
+      }
+    }
+
+    // this.points.forEach((column, i) => {
+    // column.forEach((cell, j) => {
+    // cell.draw(paper);
+    // });
+    // });
+  }
 
   reset() {
     this.createGrid();
