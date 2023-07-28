@@ -1,7 +1,7 @@
 import './style.scss';
 import LineField from './lineField.js';
 
-let lineField = new LineField(1000, 1000);
+let lineField = new LineField(window.innerWidth, window.innerHeight);
 
 lineField.draw();
 
@@ -15,3 +15,7 @@ function redraw() {
 }
 
 requestAnimationFrame(redraw);
+
+window.addEventListener('resize', () => {
+  lineField.updateSize(window.innerWidth, window.innerHeight);
+});

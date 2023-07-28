@@ -32,8 +32,8 @@ export default class LineField {
   }
 
   createGrid() {
-    const numPointsX = this.width / this.pointDistance;
-    const numPointsY = this.height / this.pointDistance;
+    const numPointsX = Math.round(this.width / this.pointDistance);
+    const numPointsY = Math.round(this.height / this.pointDistance);
     const points = new Array(numPointsX);
     for (let x = 0; x < numPointsX; x++) {
       points[x] = new Array(numPointsY);
@@ -62,8 +62,8 @@ export default class LineField {
   }
 
   draw() {
-    const numPointsX = this.width / this.pointDistance;
-    const numPointsY = this.height / this.pointDistance;
+    const numPointsX = Math.round(this.width / this.pointDistance);
+    const numPointsY = Math.round(this.height / this.pointDistance);
     let canvas = this.canvas;
     let paper = canvas.getContext('2d');
     paper.clearRect(0, 0, this.width, this.height);
@@ -83,5 +83,12 @@ export default class LineField {
 
   handleClick() {
     this.reset();
+  }
+
+  updateSize(width, height) {
+    this.width = width;
+    this.height = height;
+    this.canvas.width = width;
+    this.canvas.height = height;
   }
 }
