@@ -82,7 +82,11 @@ export default class LineField {
   }
 
   handleClick() {
-    this.reset();
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
 
   updateSize(width, height) {
