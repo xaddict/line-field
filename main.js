@@ -5,8 +5,6 @@ let lineField = new LineField(window.innerWidth, window.innerHeight);
 
 lineField.draw();
 
-// lineField.destroy();
-
 function redraw() {
   lineField.z = performance.now() / 1000;
   lineField.createGrid();

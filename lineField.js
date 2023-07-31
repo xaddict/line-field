@@ -21,8 +21,6 @@ export default class LineField {
     canvas.height = this.height;
     document.body.append(canvas);
     this.canvas = canvas;
-    this.canvas.addEventListener('click', () => this.handleClick());
-
     this.createGrid();
   }
 
@@ -79,14 +77,6 @@ export default class LineField {
   reset() {
     this.createGrid();
     this.draw();
-  }
-
-  handleClick() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
   }
 
   updateSize(width, height) {
