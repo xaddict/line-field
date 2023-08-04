@@ -13,14 +13,14 @@ export default class LineField {
   noiseGenerator2 = createNoise3D();
   z = 0; // used for time
 
+  numPointsX = 0;
+  numPointsY = 0;
+
   constructor(width = 1000, height = 1000) {
-    this.width = width;
-    this.height = height;
     let canvas = document.createElement('canvas');
-    canvas.width = this.width;
-    canvas.height = this.height;
     document.body.append(canvas);
     this.canvas = canvas;
+    this.updateSize(width, height);
     this.createGrid();
   }
 
@@ -30,12 +30,25 @@ export default class LineField {
   }
 
   createGrid() {
-    const numPointsX = Math.round(this.width / this.pointDistance);
-    const numPointsY = Math.round(this.height / this.pointDistance);
-    const points = new Array(numPointsX);
-    for (let x = 0; x < numPointsX; x++) {
-      points[x] = new Array(numPointsY);
-      for (let y = 0; y < numPointsY; y++) {
+    const points = new Array(this.numPointsX);
+    for (let x = 0; x < this.numPointsX; x++) {
+      points[x] = new Array(this.numPointsY);
+      for (let y = 0; y < this.numPointsY; y++) {
+        points[x][y] = new ForceLine(
+          x * this.pointDistance + this.pointDistance / 2,
+          y * this.pointDistance + this.pointDistance / 2,
+          this.z,
+          [1, 1]
+        );
+      }
+    }
+
+    this.points = points;
+  }
+
+  updateGrid() {
+    for (let x = 0; x < this.numPointsX; x++) {
+      for (let y = 0; y < this.numPointsY; y++) {
         let noise = this.noiseGenerator(
           x / this.zoom,
           y / this.zoom,
@@ -48,28 +61,23 @@ export default class LineField {
           this.z * this.speed
         );
 
-        points[x][y] = new ForceLine(
-          x * this.pointDistance + this.pointDistance / 2,
-          y * this.pointDistance + this.pointDistance / 2,
-          this.z,
-          [noise, noise2]
-        );
+        let point = this.points[x][y];
+        point.x = x * this.pointDistance + this.pointDistance / 2;
+        point.y = y * this.pointDistance + this.pointDistance / 2;
+        point.z = this.z;
+        point.force = [noise, noise2];
       }
     }
-
-    this.points = points;
   }
 
   draw() {
-    const numPointsX = Math.round(this.width / this.pointDistance);
-    const numPointsY = Math.round(this.height / this.pointDistance);
     let canvas = this.canvas;
     let paper = canvas.getContext('2d');
     paper.clearRect(0, 0, this.width, this.height);
     paper.fillRect(0, 0, this.width, this.height);
 
-    for (let x = numPointsX; x >= 0; x--) {
-      for (let y = numPointsY; y >= 0; y--) {
+    for (let x = this.numPointsX; x >= 0; x--) {
+      for (let y = this.numPointsY; y >= 0; y--) {
         this?.points?.[x]?.[y]?.draw(paper);
       }
     }
@@ -85,5 +93,8 @@ export default class LineField {
     this.height = height;
     this.canvas.width = width;
     this.canvas.height = height;
+    this.numPointsX = Math.round(this.width / this.pointDistance);
+    this.numPointsY = Math.round(this.height / this.pointDistance);
+    this.createGrid();
   }
 }
