@@ -51,6 +51,7 @@ export default class LineField {
         points[x][y] = new ForceLine(
           x * this.pointDistance + this.pointDistance / 2,
           y * this.pointDistance + this.pointDistance / 2,
+          this.z,
           [noise, noise2]
         );
       }

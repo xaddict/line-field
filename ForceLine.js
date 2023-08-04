@@ -7,11 +7,13 @@ function linear(x, fromStart, fromEnd, toStart, toEnd) {
 export default class ForceLine {
   x = null;
   y = null;
+  z = null;
   force = [null, null];
 
-  constructor(x, y, force) {
+  constructor(x, y, z, force) {
     this.x = x;
     this.y = y;
+    this.z = z;
     this.force = force;
   }
 
