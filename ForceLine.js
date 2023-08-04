@@ -22,13 +22,15 @@ export default class ForceLine {
     const endY = this.y + this.force[1] * 100;
     const hue = linearForce0 * 360;
     const saturation = linearForce1 * 100;
+    const lineWidth =
+      Math.sqrt(Math.pow(this.force[0], 2) + Math.pow(this.force[1], 2)) * 10;
 
     paper.beginPath();
     const gradient = paper.createLinearGradient(this.x, this.y, endX, endY);
     gradient.addColorStop(0, `hsl(${hue}, 100%, 10%)`);
     gradient.addColorStop(1, `hsl(${hue}, 100%, 50%)`);
     paper.strokeStyle = gradient;
-    paper.lineWidth = 10;
+    paper.lineWidth = lineWidth;
     paper.lineCap = 'round';
     paper.moveTo(this.x, this.y);
     paper.lineTo(endX, endY);
