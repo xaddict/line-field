@@ -76,6 +76,7 @@ export default class LineField {
     paper.clearRect(0, 0, this.width, this.height);
     paper.fillRect(0, 0, this.width, this.height);
 
+    console.log(this.numPointsX * this.numPointsY);
     for (let x = this.numPointsX; x >= 0; x--) {
       for (let y = this.numPointsY; y >= 0; y--) {
         this?.points?.[x]?.[y]?.draw(paper);
