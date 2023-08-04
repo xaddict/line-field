@@ -32,7 +32,7 @@ export default class ForceLine {
     paper.beginPath();
     const gradient = paper.createLinearGradient(this.x, this.y, endX, endY);
     const noise = noiseGenerator(this.x / 1000, this.y / 1000, this.z / 20);
-    const hue = linear(noise, -1, 1, 0, 360);
+    const hue = linear(noise, -1, 1, 0, 100);
     gradient.addColorStop(0, `hsla(${hue}, 100%, 10%, 0.1)`);
     gradient.addColorStop(1, `hsl(${hue}, 100%, 50%)`);
     paper.strokeStyle = gradient;
