@@ -74,7 +74,7 @@ export default class LineField {
     let canvas = this.canvas;
     let paper = canvas.getContext('2d');
     paper.clearRect(0, 0, this.width, this.height);
-    paper.fillRect(0, 0, this.width, this.height);
+    // paper.fillRect(0, 0, this.width, this.height);
 
     console.log(this.numPointsX * this.numPointsY);
     for (let x = this.numPointsX; x >= 0; x--) {
