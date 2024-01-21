@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "sass": "^1.63.6",
-    "vite": "^4.4.2"
+    "vite": "^4.4.12"
   },
   "dependencies": {
     "simplex-noise": "^4.0.1"
